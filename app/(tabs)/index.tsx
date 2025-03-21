@@ -1,74 +1,123 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, ScrollView } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient'; // You'll need to install this package
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+
+  const Audis = [
+    {
+      audiname: "Ks Audi",
+      desc: "There is Place For 350 to 400 students.",
+    },
+    {
+      audiname: "APJ Abdul Kalam",
+      desc: "Upto 130 members",
+    },
+    {
+      audiname: "B Block Seminar Hall",
+      desc: "Upto 130 members",
+    },
+    {
+      audiname: "New Block (AI&ML) Hall",
+      desc: "Upto 180 members",
+    },
+    {
+      audiname: "New Block Fourth floor Block",
+      desc: "Upto 130 members",
+    }
+  ];
+
+ const router = useRouter()
+
+  const handleBookNow = (audi:any) => {
+    router.push({
+      pathname: '/(stack)/booknow',
+      params: { audiname: audi.audiname, desc: audi.desc }
+    });
+
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView >
+          <View style={styles.container}>
+      {Audis.map((audi, index) => (
+        <View key={index} style={styles.card}>
+          <ImageBackground
+            source={require('../../assets/images/leaf_bg.jpg')} // Add your own image path
+            style={styles.cardBackground}
+          >
+            <LinearGradient
+              colors={['rgba(0, 0, 0, 0.3)', 'rgba(0, 0, 0, 0.7)']}
+              style={styles.gradient}
+            >
+              <Text style={styles.cardTitle}>{audi.audiname}</Text>
+              <Text style={styles.cardContent}>{audi.desc}</Text>
+
+              <TouchableOpacity style={styles.bookContainer} onPress={()=>handleBookNow(audi)}>
+                <Text style={styles.bookNow}>Book Now</Text>
+              </TouchableOpacity>
+            </LinearGradient>
+          </ImageBackground>
+        </View>
+      ))}
+    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    justifyContent: "center", // Vertically center the card
+    alignItems: "center", // Horizontally center the card
+    backgroundColor: "#f8f9fa", // Optional background color
+    paddingTop: 10,
+    paddingBottom: 60,
+  },
+  card: {
+    width: "80%",
+    margin: 10,
+    borderRadius: 10,
+    overflow: 'hidden', // To make sure image and gradient don't overflow
+    elevation: 3, // For Android shadow effect
+    shadowColor: "#000", // iOS shadow
+    shadowOffset: { width: 0, height: 2 }, // iOS shadow
+    shadowOpacity: 0.8, // iOS shadow
+    shadowRadius: 4, // iOS shadow
+    height: 200,
+  },
+  cardBackground: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  gradient: {
+    flex: 1,
+    justifyContent: "flex-end", // Position content towards the bottom
+    alignItems: "center",
+    paddingBottom: 20,
+    width: '100%',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  cardTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 10,
+  },
+  cardContent: {
+    fontSize: 16,
+    color: "#fff",
+    marginBottom: 20,
+  },
+  bookContainer: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+  },
+  bookNow: {
+    color: "red",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "audibookfnt",
-    "slug": "audibookfnt",
+    "name": "Auditorium Booking VNR",
+    "slug": "auditorium-booking-vnr",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/vnr_images.jpeg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,9 +13,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/vnr_images.jpeg",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.adithya_k.auditoriumbookingvnr"
     },
     "web": {
       "bundler": "metro",
@@ -27,7 +28,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/vnr_images.jpeg",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "4e9c21e0-99ba-4e05-8447-c6cef2934f5a"
+      }
     }
   }
 }
