@@ -13,7 +13,9 @@ import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_URL } from "@/constants/environement";
-
+import { useEffect  } from "react";
+import {  Linking } from "react-native";
+import { CURRENT_VERSION } from "@/constants/environement";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +34,7 @@ export default function Login() {
       // console.log("res", res.data.email);
       if (res.data.email === email && res.data.password === password) {
         await AsyncStorage.setItem("userToken", res.data.email);
-        Alert.alert("Login successful!");
+        //Alert.alert("Login successful!");
         router.replace("/(tabs)");
       }
       else if (res.data.email === email && email === "vnraudiadmin634@gmail.com") {
@@ -57,6 +59,32 @@ export default function Login() {
   function goToFp() {
     router.push("/(auth)/forgotPassword");
   }
+
+
+  async function checkForUpdate() {
+    try {
+      const response = await fetch(`${API_URL}/version`);
+  
+      const json = await response.json();
+      console.log(json.version.apkUrl);
+      if (json.version !== CURRENT_VERSION) {
+        Alert.alert(
+          "Update Available",
+          "A new version of the app is available. Please download the latest APK.",
+          [{ text: "Update", onPress: () => Linking.openURL(json.version.apkUrl) },
+            { text: "Cancel", style: "cancel" }]
+          
+        );
+      }
+    } catch (error) {
+      console.log("Error checking for update:", error);
+    }
+  }
+  
+  
+  useEffect(() => {
+    checkForUpdate();
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -114,6 +142,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f8f9fa",
     padding: 20,
+    
   },
   title: {
     fontSize: 24,
@@ -149,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#27AE60",
     padding: 15,
     width: "100%",
     borderRadius: 8,

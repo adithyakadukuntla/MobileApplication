@@ -48,8 +48,8 @@ export default function BookNow() {
   }, [navigation, audiname]);
   // Fetch event details from backend
   useEffect(() => {
-    fetchEvents();
-    fetchToken();
+    //fetchEvents();
+    fetchToken(); 
   }, [token]);
 
   useFocusEffect(

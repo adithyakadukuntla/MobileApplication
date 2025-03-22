@@ -4,7 +4,7 @@ import { COLORS } from '@/constants/theme';
 import { TouchableOpacity,Alert,StyleSheet } from 'react-native';
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import Entypo from '@expo/vector-icons/Entypo';
 export default function TabLayout() {
   const router = useRouter()
   const signout = () => {
@@ -39,6 +39,13 @@ export default function TabLayout() {
 
           }}
      />
+      <Tabs.Screen name="Chats"  
+          options={{
+            tabBarIcon: ({ size, color }) => <Entypo name="chat" size={size} color={color}/>,
+            
+        }}
+
+     />
      <Tabs.Screen name="Profile" 
           options={{
             tabBarIcon: ({ size, color }) => <Ionicons name="person-circle" size={size} color={color} />,
@@ -49,23 +56,7 @@ export default function TabLayout() {
             ),
           }}
      />
-     {/* <Tabs.Screen name="create" 
-          options={{
-            tabBarIcon: ({ size, color }) => <Ionicons name="add-circle" size={size} color={color}/>,
-            //show colors of top bar
-            headerTitleStyle:{
-              color: COLORS.CYAN
-            },
-          }}
-
-        }}
-     /> */}
-     {/* <Tabs.Screen name="notifications"  
-          options={{
-            tabBarIcon: ({ size, color }) => <Ionicons name="heart" size={size} color={color}/>,
-        }}
-
-     /> */}
+        
      </Tabs>
   );
 }

@@ -6,3 +6,7 @@ GET https://mobileapp-backend-f4by.onrender.com/user/adhichiru634@gmail.com
 
 ###
 get http://10.60.9.69:5000/user/adhichiru634@gmail.com
+
+
+###
+get http://192.168.0.187:5000/version
